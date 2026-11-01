@@ -1,0 +1,15 @@
+{% extends 'base.html' %}{% block body %}
+<h1>Open opportunities</h1>
+<p class="sub">Verified internships, apprenticeships, workshops and courses.</p>
+{% for o in items %}
+<div class="card">
+  <h3>{{ o.title }}</h3>
+  <div class="meta">{{ o.org_name }} &middot; {{ o.opp_type }} &middot; {{ o.mode }} &middot; {{ o.location }}</div>
+  <p>{{ o.description }}</p>
+  <div class="meta"><b>Skills:</b> {{ o.skills }}{% if o.eligibility %} &middot; <b>Eligibility:</b> {{ o.eligibility }}{% endif %}</div>
+  <div class="meta"><b>Duration:</b> {{ o.duration }} &middot; <b>Apply by:</b> {{ o.deadline }}</div>
+  <div class="meta"><b>How to apply:</b> {{ o.apply_info }}</div>
+</div>
+{% else %}
+<p>No opportunities are published yet. Organizations can <a href="{{ url_for('auth.register') }}">register</a> to post the first one.</p>
+{% endfor %}{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}{% block body %}
+<h1>Post an opportunity</h1>
+<p class="sub">It goes live after admin review.</p>
+<form method="post" novalidate>
+<input type="hidden" name="csrf" value="{{ csrf }}">
+<label for="title">Title</label><input id="title" name="title" value="{{ f.get('title','') }}" required>
+<div class="row">
+ <div><label for="opp_type">Type</label><select id="opp_type" name="opp_type">
+  {% for t in opp_types %}<option {{ 'selected' if f.get('opp_type')==t }}>{{ t }}</option>{% endfor %}</select></div>
+ <div><label for="mode">Mode</label><select id="mode" name="mode">
+  {% for m in modes %}<option {{ 'selected' if f.get('mode')==m }}>{{ m }}</option>{% endfor %}</select></div>
+</div>
+<label for="description">Description</label><textarea id="description" name="description" rows="5" required>{{ f.get('description','') }}</textarea>
+<label for="skills">Required skills (comma separated)</label><input id="skills" name="skills" placeholder="Python, Excel, Communication" value="{{ f.get('skills','') }}" required>
+<label for="eligibility">Eligibility (education, year)</label><input id="eligibility" name="eligibility" placeholder="B.E. 2nd year or above" value="{{ f.get('eligibility','') }}">
+<div class="row">
+ <div><label for="duration">Duration</label><input id="duration" name="duration" placeholder="3 months" value="{{ f.get('duration','') }}" required></div>
+ <div><label for="location">Location</label><input id="location" name="location" placeholder="Bengaluru" value="{{ f.get('location','') }}" required></div>
+</div>
+<div class="row">
+ <div><label for="deadline">Application deadline</label><input id="deadline" type="date" name="deadline" value="{{ f.get('deadline','') }}" required></div>
+ <div><label for="apply_info">How to apply (link or email)</label><input id="apply_info" name="apply_info" value="{{ f.get('apply_info','') }}" required></div>
+</div>
+<p><button>Submit for review</button></p>
+</form>{% endblock %}

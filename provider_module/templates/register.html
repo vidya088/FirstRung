@@ -1,0 +1,26 @@
+{% extends 'base.html' %}{% block body %}
+<h1>Register your organization</h1>
+<p class="sub">An admin checks every account before it can post.</p>
+<form method="post" novalidate>
+<input type="hidden" name="csrf" value="{{ csrf }}">
+<label for="name">Organization name</label><input id="name" name="name" value="{{ f.get('name','') }}" required>
+<div class="row">
+ <div><label for="org_type">Type</label><select id="org_type" name="org_type">
+  {% for t in org_types %}<option {{ 'selected' if f.get('org_type')==t }}>{{ t }}</option>{% endfor %}</select></div>
+ <div><label for="city">City</label><input id="city" name="city" value="{{ f.get('city','') }}" required></div>
+</div>
+<div class="row">
+ <div><label for="email">Email (used to log in)</label><input id="email" type="email" name="email" value="{{ f.get('email','') }}" required></div>
+ <div><label for="phone">Phone (10 digits)</label><input id="phone" name="phone" inputmode="numeric" value="{{ f.get('phone','') }}" required></div>
+</div>
+<div class="row">
+ <div><label for="contact_person">Contact person</label><input id="contact_person" name="contact_person" value="{{ f.get('contact_person','') }}" required></div>
+ <div><label for="website">Website or LinkedIn (helps verification)</label><input id="website" name="website" placeholder="https://" value="{{ f.get('website','') }}"></div>
+</div>
+<div class="row">
+ <div><label for="password">Password</label><input id="password" type="password" name="password" autocomplete="new-password" required></div>
+ <div><label for="confirm">Confirm password</label><input id="confirm" type="password" name="confirm" autocomplete="new-password" required></div>
+</div>
+<p class="meta">Use 8+ characters with letters and numbers.</p>
+<button>Register organization</button>
+</form>{% endblock %}

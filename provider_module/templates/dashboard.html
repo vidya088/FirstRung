@@ -1,0 +1,15 @@
+{% extends 'base.html' %}{% block body %}
+<h1>{{ org.name }}</h1>
+<p class="sub">Account status: <span class="tag {{ org.status }}">{{ org.status }}</span></p>
+{% if org.status == 'approved' %}<p><a class="btn" href="{{ url_for('provider.post') }}">Post an opportunity</a></p>
+{% elif org.status == 'pending' %}<p>Your account is waiting for admin approval. You can post once it is approved.</p>
+{% else %}<p>Your account was rejected. Contact the admin for details.</p>{% endif %}
+<h2>Your listings</h2>
+{% for o in items %}
+<div class="card">
+  <h3>{{ o.title }}</h3>
+  <div class="meta">{{ o.opp_type }} &middot; {{ o.location }} &middot; Deadline {{ o.deadline }}</div>
+  {% if o.status == 'approved' and o.deadline < today %}<span class="tag expired">expired</span>
+  {% else %}<span class="tag {{ o.status }}">{{ o.status }}</span>{% endif %}
+</div>
+{% else %}<p>You have not posted anything yet.</p>{% endfor %}{% endblock %}

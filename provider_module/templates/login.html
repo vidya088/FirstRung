@@ -1,0 +1,9 @@
+{% extends 'base.html' %}{% block body %}
+<h1>Log in</h1>
+<p class="sub">For registered organizations and admins.</p>
+<form method="post" style="max-width:400px">
+<input type="hidden" name="csrf" value="{{ csrf }}">
+<label for="email">Email</label><input id="email" type="email" name="email" required>
+<label for="password">Password</label><input id="password" type="password" name="password" required>
+<p><button>Log in</button></p>
+</form>{% endblock %}
