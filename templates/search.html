@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block title %}Search opportunities | YouthConnect{% endblock %}
+
+{% block content %}
+
+<section class="page-heading">
+    <p class="eyebrow">OPPORTUNITY CATALOGUE</p>
+    <h1>Search opportunities</h1>
+    <p class="muted">
+        Explore active listings. Demo entries are fictional examples.
+    </p>
+</section>
+
+<form method="get" class="filter-panel">
+    <div class="filter-grid">
+
+        <div>
+            <label for="keyword">Keyword</label>
+            <input id="keyword"
+                   name="keyword"
+                   value="{{ filters.keyword }}"
+                   placeholder="Title, organization">
+        </div>
+
+        <div>
+            <label for="category">Opportunity type</label>
+            <select id="category" name="category">
+                <option value="">All types</option>
+                {% for c in categories %}
+                    <option value="{{ c }}"
+                        {% if filters.category == c %}selected{% endif %}>
+                        {{ c }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label for="location">Location</label>
+            <input id="location"
+                   name="location"
+                   value="{{ filters.location }}"
+                   placeholder="Bengaluru, Online">
+        </div>
+
+        <div>
+            <label for="skill">Skill</label>
+            <input id="skill"
+                   name="skill"
+                   value="{{ filters.skill }}"
+                   placeholder="Python, design">
+        </div>
+
+        <div>
+            <label for="eligibility">Eligibility</label>
+            <input id="eligibility"
+                   name="eligibility"
+                   value="{{ filters.eligibility }}"
+                   placeholder="Students, beginners">
+        </div>
+
+        <div>
+            <label for="duration">Duration</label>
+            <input id="duration"
+                   name="duration"
+                   value="{{ filters.duration }}"
+                   placeholder="4 weeks, 3 months">
+        </div>
+
+    </div>
+
+    <div class="form-actions">
+        <button type="submit">Apply filters</button>
+        <a class="button button-muted"
+           href="{{ url_for('search') }}">Clear filters</a>
+    </div>
+</form>
+
+<p class="muted">{{ opportunities|length }} result(s)</p>
+
+<div class="cards">
+    {% for o in opportunities %}
+        <article class="card">
+
+            <div class="card-tags">
+                <span class="tag">{{ o.category }}</span>
+
+                {% if o.is_demo %}
+                    <span class="demo">Demo listing</span>
+                {% endif %}
+            </div>
+
+            <h3>{{ o.title }}</h3>
+            <p class="organization">{{ o.organization }}</p>
+
+            <p class="muted">
+                {{ o.location }} · {{ o.duration }}
+            </p>
+
+            <p>
+                <strong>Skills:</strong>
+                {{ o.skills or "Not specified" }}
+            </p>
+
+            <p>
+                <strong>Eligibility:</strong>
+                {{ o.eligibility or "Not specified" }}
+            </p>
+
+            <p>
+                <strong>Deadline:</strong>
+                {{ o.deadline or "Not specified" }}
+            </p>
+
+            <p>{{ o.description }}</p>
+        </article>
+    {% else %}
+        <div class="empty-state">
+            <h3>No matching opportunities</h3>
+            <p>Try changing or clearing one or more filters.</p>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

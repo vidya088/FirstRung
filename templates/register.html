@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Register | YouthConnect{% endblock %}
+
+{% block content %}
+
+<section class="form-shell">
+    <p class="eyebrow">GET STARTED</p>
+    <h1>Create your student account</h1>
+
+    <p class="muted">
+        Register to build your profile and discover opportunities.
+    </p>
+
+    <form method="post" class="form-card">
+        <label for="name">Full name</label>
+        <input id="name"
+               name="name"
+               required
+               maxlength="100"
+               autocomplete="name">
+
+        <label for="email">Email address</label>
+        <input id="email"
+               name="email"
+               type="email"
+               required
+               maxlength="254"
+               autocomplete="email">
+
+        <label for="password">Password (minimum 8 characters)</label>
+        <input id="password"
+               name="password"
+               type="password"
+               required
+               minlength="8"
+               autocomplete="new-password">
+
+        <button type="submit">Create account</button>
+    </form>
+
+    <p>
+        Already have an account?
+        <a href="{{ url_for('login') }}">Log in</a>
+    </p>
+</section>
+
+{% endblock %}

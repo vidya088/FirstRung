@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %}YouthConnect | Home{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <p class="eyebrow">LEARN · PRACTISE · GROW</p>
+
+    <h1>Discover opportunities. Build your future.</h1>
+
+    <p>
+        Find internships, apprenticeships, workshops,
+        certification courses and skill training in one place.
+    </p>
+
+    <form class="hero-search"
+          action="{{ url_for('search') }}" method="get">
+
+        <input name="keyword"
+               placeholder="Search Python, design, marketing..."
+               aria-label="Search keywords">
+
+        <input name="location"
+               placeholder="Location or Online"
+               aria-label="Location">
+
+        <button type="submit">Search opportunities</button>
+    </form>
+
+    <div class="hero-actions">
+        <a class="button button-light"
+           href="{{ url_for('register') }}">
+            Join as a student
+        </a>
+
+        {% if not current_user %}
+            <a class="button button-outline"
+               href="{{ url_for('login') }}">
+                Log in
+            </a>
+        {% endif %}
+    </div>
+</section>
+
+<div class="section-heading">
+    <div>
+        <p class="eyebrow">GET STARTED</p>
+        <h2>Featured opportunities</h2>
+    </div>
+
+    <a href="{{ url_for('search') }}">Explore all →</a>
+</div>
+
+<div class="cards">
+    {% for o in opportunities %}
+        <article class="card">
+            <div class="card-tags">
+                <span class="tag">{{ o.category }}</span>
+
+                {% if o.is_demo %}
+                    <span class="demo">Demo listing</span>
+                {% endif %}
+            </div>
+
+            <h3>{{ o.title }}</h3>
+            <p class="organization">{{ o.organization }}</p>
+
+            <p class="muted">
+                {{ o.location }} · {{ o.duration }}
+            </p>
+
+            <p>
+                <strong>Skills:</strong>
+                {{ o.skills or "Not specified" }}
+            </p>
+
+            <p class="muted small">{{ o.description }}</p>
+
+            <a href="{{ url_for('search', keyword=o.title) }}">
+                Explore similar →
+            </a>
+        </article>
+    {% else %}
+        <p>No active opportunities are available yet.</p>
+    {% endfor %}
+</div>
+
+<section class="how-it-works">
+    <div>
+        <span>01</span>
+        <h3>Create a profile</h3>
+        <p>Add your education, skills, interests and location.</p>
+    </div>
+
+    <div>
+        <span>02</span>
+        <h3>Discover opportunities</h3>
+        <p>Search by type, location, skills, eligibility and duration.</p>
+    </div>
+
+    <div>
+        <span>03</span>
+        <h3>Get recommendations</h3>
+        <p>See simple matches based on your profile.</p>
+    </div>
+</section>
+
+{% endblock %}

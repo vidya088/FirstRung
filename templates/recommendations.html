@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Recommendations | YouthConnect{% endblock %}
+
+{% block content %}
+
+<section class="page-heading">
+    <p class="eyebrow">PROFILE-BASED DISCOVERY</p>
+    <h1>Recommended for you</h1>
+
+    <p class="muted">
+        This is a simple rule-based match score, not an AI prediction
+        or a guarantee of eligibility or selection.
+    </p>
+</section>
+
+{% if not has_profile %}
+    <div class="notice">
+        Your profile is mostly empty.
+        <a href="{{ url_for('profile') }}">
+            Add your skills, interests and location
+        </a>
+        to get more useful matches.
+    </div>
+{% endif %}
+
+<div class="cards">
+    {% for score, o in matches %}
+        <article class="card">
+
+            <div class="card-tags">
+                <span class="tag">{{ o.category }}</span>
+                <span class="score">{{ score }}% match</span>
+            </div>
+
+            <h3>{{ o.title }}</h3>
+            <p class="organization">{{ o.organization }}</p>
+
+            <p class="muted">
+                {{ o.location }} · {{ o.duration }}
+            </p>
+
+            <p>
+                <strong>Skills:</strong>
+                {{ o.skills or "Not specified" }}
+            </p>
+
+            <p>
+                <strong>Eligibility:</strong>
+                {{ o.eligibility or "Not specified" }}
+            </p>
+
+            <p>{{ o.description }}</p>
+
+            <a href="{{ url_for('search', keyword=o.title) }}">
+                Find this opportunity →
+            </a>
+        </article>
+    {% else %}
+        <div class="empty-state">
+            No active opportunities are available to recommend.
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

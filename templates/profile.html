@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}My profile | YouthConnect{% endblock %}
+
+{% block content %}
+
+<section class="page-heading">
+    <p class="eyebrow">YOUR PROFILE</p>
+    <h1>Personalize your opportunity search</h1>
+
+    <p class="muted">
+        Separate skills and interests with commas.
+        Example: Python, SQL, communication.
+    </p>
+</section>
+
+<section class="form-shell wide">
+    <form method="post" class="form-card">
+
+        <label for="education">Education / qualification</label>
+        <input id="education"
+               name="education"
+               maxlength="200"
+               value="{{ profile.get('education', '') }}"
+               placeholder="e.g. B.E. in Computer Science">
+
+        <label for="skills">Skills</label>
+        <textarea id="skills"
+                  name="skills"
+                  rows="3"
+                  maxlength="1000"
+                  placeholder="Python, SQL, HTML">{{ profile.get('skills', '') }}</textarea>
+
+        <label for="interests">Career interests</label>
+        <textarea id="interests"
+                  name="interests"
+                  rows="3"
+                  maxlength="1000"
+                  placeholder="Data analytics, web development">{{ profile.get('interests', '') }}</textarea>
+
+        <label for="location">Preferred location</label>
+        <input id="location"
+               name="location"
+               maxlength="200"
+               value="{{ profile.get('location', '') }}"
+               placeholder="Bengaluru, Mysuru, Online">
+
+        <button type="submit">Save profile</button>
+    </form>
+
+    <div class="side-note">
+        <h3>Next step</h3>
+
+        <p>
+            After saving your profile, search for opportunities
+            or view recommendations. Always check the eligibility
+            details yourself.
+        </p>
+
+        <a class="button" href="{{ url_for('recommendations') }}">
+            View recommendations
+        </a>
+    </div>
+</section>
+
+{% endblock %}
